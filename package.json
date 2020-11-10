@@ -3,16 +3,29 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "react": "^16.4.1",
-    "react-dom": "^16.4.1",
-    "react-scripts": "1.1.4",
+    "chance": "^1.1.7",
+    "husky": "^4.3.0",
+    "lint-staged": "^10.5.1",
     "mobx": "^6.0.3",
     "mobx-react": "^6.3.0",
-    "chance": "^1.1.7"
+    "prettier": "^2.1.2",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "react-scripts": "1.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom"
+  },
+  "husky": {
+      "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "prettier --write"
+    ]
   }
 }

@@ -1,28 +1,28 @@
-import { makeAutoObservable } from 'mobx';
+import { makeAutoObservable } from "mobx";
 
 export default class Timer {
-    secondsPassed = 0
-    interval;
+  secondsPassed = 0;
+  interval;
 
-    constructor() {
-        makeAutoObservable(this)
-    }
+  constructor() {
+    makeAutoObservable(this);
+  }
 
-    startTimer(){
-        this.interval = setInterval(() => {
-            this.increase();
-        }, 1000);
-    }
+  startTimer() {
+    this.interval = setInterval(() => {
+      this.increase();
+    }, 1000);
+  }
 
-    stopTimer(){
-        clearInterval(this.interval);
-    }
-    
-    increase() {
-        this.secondsPassed += 1
-    }
+  stopTimer() {
+    clearInterval(this.interval);
+  }
 
-    reset() {
-        this.secondsPassed = 0
-    }
+  increase() {
+    this.secondsPassed += 1;
+  }
+
+  reset() {
+    this.secondsPassed = 0;
+  }
 }
