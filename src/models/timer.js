@@ -6,11 +6,17 @@ export default class Timer {
 
   constructor() {
     makeAutoObservable(this);
+    this.takeAction = () => {};
+  }
+
+  setCallback(callback) {
+    this.takeAction = callback;
   }
 
   startTimer() {
     this.interval = setInterval(() => {
       this.increase();
+      this.takeAction();
     }, 1000);
   }
 

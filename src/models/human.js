@@ -1,13 +1,27 @@
 import { makeAutoObservable } from "mobx";
+import Timer from "./timer";
 const Chance = require("chance");
 
 export default class Human {
-  constructor() {
+  constructor(starship) {
+    this.starship = starship;
     this.birthday = new Date();
     this.name = new Chance().name();
+    this.timer = new Timer();
     makeAutoObservable(this);
-    console.log(
-      `Hello world my name is ${this.name} and I was born ${this.birthday}`
-    );
+  }
+
+  init() {
+    this.starship.takePod();
+    console.log(`Hello world I was born ${this.birthday}`);
+    const name = this.name;
+    this.timer.setCallback(function () {
+      console.log(`My name is ${name}`);
+    });
+    this.timer.startTimer();
+  }
+
+  stopTimer() {
+    this.timer.stopTimer();
   }
 }
