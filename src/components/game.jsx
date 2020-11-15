@@ -1,6 +1,7 @@
 import React from "react";
 import HumansView from "./humans-view";
 import "./game.css";
+import { VictoryPie } from "victory";
 
 export default function Game(myStarship) {
   return (
@@ -15,22 +16,46 @@ export default function Game(myStarship) {
         <span> Starship state: grounded </span>
         <div className="atmospherePanel">
           Atmosphere composition:
-          <span>
-            {" "}
-            Oxygen:{" "}
-            {myStarship.getAtmosphereComponentAsPercentage(
-              myStarship.air.OXYGEN
-            )}
-            %{" "}
-          </span>
-          <span>
-            {" "}
-            CO2:{" "}
-            {myStarship.getAtmosphereComponentAsPercentage(
-              myStarship.air.CARBON_DIOXIDE
-            )}
-            %{" "}
-          </span>
+          <VictoryPie
+            className="visualization"
+            colorScale="heatmap"
+            height={200}
+            innerRadius={100}
+            data={[
+              {
+                x: `Oxygen: ${myStarship.getAtmosphereComponentAsPercentage(
+                  myStarship.air.OXYGEN
+                )}%`,
+                y: myStarship.getAtmosphereComponentAsPercentage(
+                  myStarship.air.OXYGEN
+                ),
+              },
+              {
+                x: `CO2: ${myStarship.getAtmosphereComponentAsPercentage(
+                  myStarship.air.CARBON_DIOXIDE
+                )}%`,
+                y: myStarship.getAtmosphereComponentAsPercentage(
+                  myStarship.air.CARBON_DIOXIDE
+                ),
+              },
+              {
+                x: `Nitrogen: ${myStarship.getAtmosphereComponentAsPercentage(
+                  myStarship.air.NITROGEN
+                )}%`,
+                y: myStarship.getAtmosphereComponentAsPercentage(
+                  myStarship.air.NITROGEN
+                ),
+              },
+              {
+                x: `Water Vapor: ${myStarship.getAtmosphereComponentAsPercentage(
+                  myStarship.air.WATER_VAPOR
+                )}%`,
+                y: myStarship.getAtmosphereComponentAsPercentage(
+                  myStarship.air.WATER_VAPOR
+                ),
+              },
+            ]}
+          />
         </div>
         <HumansView starship={myStarship} />
       </div>
