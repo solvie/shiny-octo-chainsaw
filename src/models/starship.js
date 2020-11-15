@@ -14,7 +14,6 @@ export default class Starship {
   constructor(timer) {
     this.humans = [];
     this.timer = timer;
-    this.pods = 5;
     makeAutoObservable(this);
     this.air = {
       NITROGEN: ATMOSPHERE_COMPOSITION_BREAKDOWN.NITROGEN * AIR_CAPACITY,
@@ -23,6 +22,10 @@ export default class Starship {
         ATMOSPHERE_COMPOSITION_BREAKDOWN.CARBON_DIOXIDE * AIR_CAPACITY,
       WATER_VAPOR: ATMOSPHERE_COMPOSITION_BREAKDOWN.WATER_VAPOR * AIR_CAPACITY,
     };
+  }
+
+  getAtmosphereComponentAsPercentage(component) {
+    return (component * 100) / AIR_CAPACITY;
   }
 
   start() {
@@ -51,14 +54,6 @@ export default class Starship {
   calculateAtmosphereComposition() {
     //todo.
     console.log(this.air);
-  }
-
-  takePod() {
-    if (this.pods > 0) {
-      this.pods = this.pods - 1;
-    } else {
-      throw new Error("No more pods");
-    }
   }
 
   addHuman() {

@@ -1,17 +1,39 @@
 import React from "react";
 import HumansView from "./humans-view";
+import "./game.css";
 
 export default function Game(myStarship) {
   return (
-    <div>
-      <span> Starship state is grounded </span>
-      <button onClick={() => myStarship.start()}> Start time </button>
-      <button onClick={() => myStarship.stop()}> Stop time </button>
-      <span> The timer says it is now: {myStarship.timer.secondsPassed} </span>
-      <span> Oxygen: {myStarship.air.OXYGEN} </span>
-      <span> CO2: {myStarship.air.CARBON_DIOXIDE} </span>
-      <span> Number of pods available: {myStarship.pods} </span>
-      <HumansView starship={myStarship} />
+    <div className="gamePanel">
+      <div>
+        Time
+        <span> : {myStarship.timer.secondsPassed} </span>
+        <button onClick={() => myStarship.start()}> Start </button>
+        <button onClick={() => myStarship.stop()}> Stop </button>
+      </div>
+      <div>
+        <span> Starship state: grounded </span>
+        <div className="atmospherePanel">
+          Atmosphere composition:
+          <span>
+            {" "}
+            Oxygen:{" "}
+            {myStarship.getAtmosphereComponentAsPercentage(
+              myStarship.air.OXYGEN
+            )}
+            %{" "}
+          </span>
+          <span>
+            {" "}
+            CO2:{" "}
+            {myStarship.getAtmosphereComponentAsPercentage(
+              myStarship.air.CARBON_DIOXIDE
+            )}
+            %{" "}
+          </span>
+        </div>
+        <HumansView starship={myStarship} />
+      </div>
     </div>
   );
 }

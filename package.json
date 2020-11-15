@@ -19,7 +19,7 @@
     "test": "react-scripts test --env=jsdom"
   },
   "husky": {
-      "hooks": {
+    "hooks": {
       "pre-commit": "lint-staged"
     }
   },
