@@ -1,7 +1,7 @@
 import React from "react";
 import HumansView from "./humans-view";
 import "./game.css";
-import { VictoryPie } from "victory";
+import { VictoryPie, VictoryLabel } from "victory";
 
 export default function Game(myStarship) {
   return (
@@ -17,44 +17,10 @@ export default function Game(myStarship) {
         <div className="atmospherePanel">
           Atmosphere composition:
           <VictoryPie
+            labelComponent={<VictoryLabel renderInPortal />} //prevents label getting clipped
             className="visualization"
             colorScale="heatmap"
-            height={200}
-            innerRadius={100}
-            data={[
-              {
-                x: `Oxygen: ${myStarship.getAtmosphereComponentAsPercentage(
-                  myStarship.air.OXYGEN
-                )}%`,
-                y: myStarship.getAtmosphereComponentAsPercentage(
-                  myStarship.air.OXYGEN
-                ),
-              },
-              {
-                x: `CO2: ${myStarship.getAtmosphereComponentAsPercentage(
-                  myStarship.air.CARBON_DIOXIDE
-                )}%`,
-                y: myStarship.getAtmosphereComponentAsPercentage(
-                  myStarship.air.CARBON_DIOXIDE
-                ),
-              },
-              {
-                x: `Nitrogen: ${myStarship.getAtmosphereComponentAsPercentage(
-                  myStarship.air.NITROGEN
-                )}%`,
-                y: myStarship.getAtmosphereComponentAsPercentage(
-                  myStarship.air.NITROGEN
-                ),
-              },
-              {
-                x: `Water Vapor: ${myStarship.getAtmosphereComponentAsPercentage(
-                  myStarship.air.WATER_VAPOR
-                )}%`,
-                y: myStarship.getAtmosphereComponentAsPercentage(
-                  myStarship.air.WATER_VAPOR
-                ),
-              },
-            ]}
+            data={myStarship.getAtmosphereAsPieChart()}
           />
         </div>
         <HumansView starship={myStarship} />

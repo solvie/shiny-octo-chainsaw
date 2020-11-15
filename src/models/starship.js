@@ -1,12 +1,6 @@
 import { makeAutoObservable } from "mobx";
 import Human from "./human";
-
-const ATMOSPHERE_COMPOSITION_BREAKDOWN = {
-  NITROGEN: 0.78,
-  OXYGEN: 0.2095,
-  CARBON_DIOXIDE: 0.0005,
-  WATER_VAPOR: 0.01,
-};
+import { ATMOSPHERE_COMPOSITION_BREAKDOWN } from "./atmosphere-constants";
 
 const AIR_CAPACITY = 15000; //in cubic meters;
 
@@ -14,18 +8,29 @@ export default class Starship {
   constructor(timer) {
     this.humans = [];
     this.timer = timer;
+    this.air = {};
+    console.log(ATMOSPHERE_COMPOSITION_BREAKDOWN);
+    Object.entries(ATMOSPHERE_COMPOSITION_BREAKDOWN).forEach(
+      ([key, value]) => (this.air[key] = value * AIR_CAPACITY)
+    );
     makeAutoObservable(this);
-    this.air = {
-      NITROGEN: ATMOSPHERE_COMPOSITION_BREAKDOWN.NITROGEN * AIR_CAPACITY,
-      OXYGEN: ATMOSPHERE_COMPOSITION_BREAKDOWN.OXYGEN * AIR_CAPACITY,
-      CARBON_DIOXIDE:
-        ATMOSPHERE_COMPOSITION_BREAKDOWN.CARBON_DIOXIDE * AIR_CAPACITY,
-      WATER_VAPOR: ATMOSPHERE_COMPOSITION_BREAKDOWN.WATER_VAPOR * AIR_CAPACITY,
-    };
   }
 
   getAtmosphereComponentAsPercentage(component) {
     return (component * 100) / AIR_CAPACITY;
+  }
+
+  getAtmosphereAsPieChart() {
+    const data = [];
+    Object.entries(this.air).forEach(([key, value]) =>
+      data.push({
+        x: `${key}: ${+this.getAtmosphereComponentAsPercentage(value).toFixed(
+          2
+        )}%`,
+        y: this.getAtmosphereComponentAsPercentage(value),
+      })
+    );
+    return data;
   }
 
   start() {
@@ -40,20 +45,9 @@ export default class Starship {
   }
 
   atmosphereChange(volume, percentChangeInComposition) {
-    this.air.NITROGEN = this.air.NITROGEN +=
-      volume * percentChangeInComposition.NITROGEN;
-    this.air.OXYGEN = this.air.OXYGEN +=
-      volume * percentChangeInComposition.OXYGEN;
-    this.air.CARBON_DIOXIDE = this.air.CARBON_DIOXIDE +=
-      volume * percentChangeInComposition.CARBON_DIOXIDE;
-    this.air.WATER_VAPOR = this.air.WATER_VAPOR +=
-      volume * percentChangeInComposition.WATER_VAPOR;
-    // if level is too low and starship is grounded, 'vent' reset.
-  }
-
-  calculateAtmosphereComposition() {
-    //todo.
-    console.log(this.air);
+    Object.entries(percentChangeInComposition).forEach(([key, value]) => {
+      this.air[key] = this.air[key] += volume * value;
+    });
   }
 
   addHuman() {
