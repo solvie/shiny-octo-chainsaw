@@ -3,7 +3,7 @@ import Timer from "./timer";
 const Chance = require("chance");
 
 const BREATH_PERIOD_IN_SECONDS = 3; // A human takes ~20 breaths in 1 minute = 1 breath per 3 seconds
-function respire() {
+function respireVolumeChangeInOneBreath() {
   return {
     OXYGEN: -0.000139125,
     CARBON_DIOXIDE: 0.000069125,
@@ -17,7 +17,7 @@ export default class Human {
   }
 
   getRespirationResult() {
-    return respire();
+    return respireVolumeChangeInOneBreath();
   }
 
   constructor(starship) {
@@ -34,7 +34,7 @@ export default class Human {
     const starship = this.starship;
     this.timer.setCallback(function breathe() {
       if (this.secondsPassed % BREATH_PERIOD_IN_SECONDS === 0) {
-        starship.atmosphereChange(respire());
+        starship.atmosphereChange(respireVolumeChangeInOneBreath());
       }
     });
     this.timer.startTimer();
