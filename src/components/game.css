@@ -3,8 +3,7 @@
   flex-direction: column;
 }
 
-.atmospherePanel {
-  border: 1px solid green;
+.graphs {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
 }

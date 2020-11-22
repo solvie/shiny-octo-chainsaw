@@ -1,7 +1,7 @@
 import React from "react";
 import HumansView from "./humans-view";
+import AtmospherePanel from "./atmosphere-panel";
 import "./game.css";
-import { VictoryPie, VictoryLabel } from "victory";
 
 export default function Game(myStarship) {
   return (
@@ -14,15 +14,7 @@ export default function Game(myStarship) {
       </div>
       <div>
         <span> Starship state: grounded </span>
-        <div className="atmospherePanel">
-          Atmosphere composition:
-          <VictoryPie
-            labelComponent={<VictoryLabel renderInPortal />} //prevents label getting clipped
-            className="visualization"
-            colorScale="heatmap"
-            data={myStarship.getAtmosphereAsPieChart()}
-          />
-        </div>
+        <AtmospherePanel starship={myStarship} />
         <HumansView starship={myStarship} />
       </div>
     </div>

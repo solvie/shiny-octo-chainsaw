@@ -1,27 +1,25 @@
 import { makeAutoObservable } from "mobx";
 import Timer from "./timer";
-import { ATMOSPHERE_COMPOSITION_BREAKDOWN } from "./atmosphere-constants";
 const Chance = require("chance");
 
 const BREATH_PERIOD_IN_SECONDS = 3; // A human takes ~20 breaths in 1 minute = 1 breath per 3 seconds
-const VOLUME_OF_A_BREATH = 0.00175;
-const EXHALED_AIR_COMPOSITION = {
-  NITROGEN: 0.78,
-  OXYGEN: 0.13,
-  CARBON_DIOXIDE: 0.04,
-  WATER_VAPOR: 0.05,
-};
-
 function respire() {
-  const respired = {};
-  Object.entries(EXHALED_AIR_COMPOSITION).forEach(
-    ([key, value]) =>
-      (respired[key] = value - ATMOSPHERE_COMPOSITION_BREAKDOWN[key])
-  );
-  return respired;
+  return {
+    OXYGEN: -0.000139125,
+    CARBON_DIOXIDE: 0.000069125,
+    WATER_VAPOR: 0.00007
+  };
 }
 
 export default class Human {
+  getBreathPeriodInSeconds() {
+    return BREATH_PERIOD_IN_SECONDS;
+  }
+
+  getRespirationResult() {
+    return respire();
+  }
+
   constructor(starship) {
     this.starship = starship;
     this.birthday = new Date();
@@ -36,7 +34,7 @@ export default class Human {
     const starship = this.starship;
     this.timer.setCallback(function breathe() {
       if (this.secondsPassed % BREATH_PERIOD_IN_SECONDS === 0) {
-        starship.atmosphereChange(VOLUME_OF_A_BREATH, respire());
+        starship.atmosphereChange(respire());
       }
     });
     this.timer.startTimer();

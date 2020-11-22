@@ -13,9 +13,9 @@ export default observer(
       return (
         <div className="humansbox">
           <span>Humans panel</span>
-          <span>Population: {starship.humans.length}</span>
+          <span>Population: {starship.inhabitants.length}</span>
           <ul id="humans">
-            {starship.humans.map((human) => (
+            {starship.inhabitants.map((human) => (
               <li>{human.name}</li>
             ))}
           </ul>
