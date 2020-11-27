@@ -3,13 +3,11 @@ import Timer from "./timer";
 const Chance = require("chance");
 
 const BREATH_PERIOD_IN_SECONDS = 3; // A human takes ~20 breaths in 1 minute = 1 breath per 3 seconds
-function respireVolumeChangeInOneBreath() {
-  return {
-    OXYGEN: -0.000139125,
-    CARBON_DIOXIDE: 0.000069125,
-    WATER_VAPOR: 0.00007
-  };
-}
+const respireVolumeChangeInOneBreath = () => ({
+  OXYGEN: -0.000139125,
+  CARBON_DIOXIDE: 0.000069125,
+  WATER_VAPOR: 0.00007,
+});
 
 export default class Human {
   getBreathPeriodInSeconds() {
@@ -29,8 +27,9 @@ export default class Human {
   }
 
   init() {
-    console.log(`Hello world I was born ${this.birthday}`);
-    const name = this.name;
+    console.log(
+      `Hello world my name is ${this.name}. I was born ${this.birthday}`
+    );
     const starship = this.starship;
     this.timer.setCallback(function breathe() {
       if (this.secondsPassed % BREATH_PERIOD_IN_SECONDS === 0) {

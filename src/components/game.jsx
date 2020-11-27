@@ -1,5 +1,6 @@
 import React from "react";
 import HumansView from "./humans-view";
+import PlantsView from "./plants-view";
 import AtmospherePanel from "./atmosphere-panel";
 import "./game.css";
 
@@ -16,6 +17,7 @@ export default function Game(myStarship) {
         <span> Starship state: grounded </span>
         <AtmospherePanel starship={myStarship} />
         <HumansView starship={myStarship} />
+        <PlantsView starship={myStarship} />
       </div>
     </div>
   );

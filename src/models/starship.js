@@ -1,5 +1,6 @@
 import { makeAutoObservable } from "mobx";
 import Human from "./human";
+import Tree from "./tree";
 import { ATMOSPHERE_COMPOSITION_BREAKDOWN } from "./atmosphere-constants";
 
 export default class Starship {
@@ -37,8 +38,8 @@ export default class Starship {
 
   stop() {
     this.timer.stopTimer();
-    for (var human of this.inhabitants) {
-      human.stopTimer();
+    for (var inhabitant of this.inhabitants) {
+      inhabitant.stopTimer();
     }
   }
 
@@ -53,7 +54,16 @@ export default class Starship {
       const human = new Human(this);
       human.init();
       this.inhabitants.push(human);
-      console.log("added a human: " + this.inhabitants.length);
+    } catch (e) {
+      console.log("Error adding human: ", e.message);
+    }
+  }
+
+  addPlant() {
+    try {
+      const plant = new Tree(this);
+      plant.init();
+      this.inhabitants.push(plant);
     } catch (e) {
       console.log("Error adding human: ", e.message);
     }
